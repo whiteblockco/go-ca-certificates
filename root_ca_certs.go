@@ -1,9 +1,5 @@
 package certs
 
-import (
-	"encoding/pem"
-)
-
 const ca_certs = `-----BEGIN CERTIFICATE-----
 MIIH0zCCBbugAwIBAgIIXsO3pkN/pOAwDQYJKoZIhvcNAQEFBQAwQjESMBAGA1UE
 AwwJQUNDVlJBSVoxMRAwDgYDVQQLDAdQS0lBQ0NWMQ0wCwYDVQQKDARBQ0NWMQsw
@@ -3582,20 +3578,3 @@ m7v/OeZWYdMKp8RcTGB7BXcmer/YB1IsYvdwY9k5vG8cwnncdimvzsUsZAReiDZu
 MdRAGmI0Nj81Aa6sY6A=
 -----END CERTIFICATE-----`
 
-func CertsPEM() string {
-	return ca_certs
-}
-
-func CertsX509() []*pem.Block {
-	return decodePEM([]*pem.Block{}, []byte(ca_certs))
-}
-
-func decodePEM(blocks []*pem.Block, pemBytes []byte) []*pem.Block {
-	b, rest := pem.Decode([]byte(pemBytes))
-	if rest != nil {
-		blocks = append(blocks, b)
-		return decodePEM(blocks, rest)
-	}
-
-	return blocks
-}
